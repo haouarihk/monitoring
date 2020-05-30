@@ -10,13 +10,9 @@
  # How to start:
  
    ## install requirements
-     ``
-     pip install -r requirements.txt
-     ``
-     or
-     ``
-     pip install -r requirements2.txt
-    ``
+   ``pip install -r requirements.txt``
+   or
+   ``pip install -r requirements2.txt``
    
    ## How to use
    in the ``map.json`` file you can add objects as array that every object containers ``url`` and ``props`` properties
@@ -32,7 +28,7 @@
    it outputs in the ``monitoringData.json`` as array of object 
         
    every object has this structor:
-            ```js
+   ```js
                { 
                     "url": "https://evergreen-olivine-sardine.glitch.me", // the url of the site
                     "LastInner": "1ddddd",                                // the last change inner
@@ -43,4 +39,4 @@
                             "time": "2020-05-30 10:36:18.631454"// this change when it happen
                         }
                }
-            ```
+   ```
