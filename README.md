@@ -22,7 +22,8 @@
 
    -``props``: is the variable properties like ``type.class#id`` of the element that you want to observe, you can use ``body`` or ``html``
 
-   -this file should be an array, And you can't have two objects with the same url.
+   -this file should be an array
+   -And you can't have two objects with the same url.
 
    ## The output:
    it outputs in the ``monitoringData.json`` as array of object 
