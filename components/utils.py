@@ -26,7 +26,7 @@ def findWithUrl(url, data):
         pass
     return ri
     pass
-def getsite(url):
+def getPage(url):
     res =  requests.get(url, headers=headers)
     return res
     pass

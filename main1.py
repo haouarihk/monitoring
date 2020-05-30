@@ -34,14 +34,13 @@ import json
 
 
 
-# monitor functions
+# data file functions
 def readMonitoringData():
     data = ReadFile(monitoringFilePath)
     if(checkIfNotAList(data)):
         print("the monitoring file has reseted seccussfully")
         data = []
     return data
-    pass
 
 def writeOnMonitoringData(data):
     writeToFile(data, monitoringFilePath)
@@ -63,8 +62,6 @@ def updateOnMonitoringData(url, inner):
     _data[index]['Lastsaved']=str(timenow)
     _data[index]['LastInner']=str(inner)
     writeOnMonitoringData(_data)
-    pass
-
 
 def readMap():
     data = ReadFile(mapFilePath)
@@ -72,8 +69,9 @@ def readMap():
         raise NameError("sorry but the map file needs to be an array")
         return []
     return data
-    pass
 
+
+# structoring data
 def getobject(url):
     data = readMap()
     index = findWithUrl(url, data)
@@ -81,7 +79,6 @@ def getobject(url):
         return (data[index],index)
 
     return ({'url':url,'inner':0},-1)
-    pass
 def getDataChanged(url):
     data = readMonitoringData()
     index = findWithUrl(url, data)
@@ -89,15 +86,15 @@ def getDataChanged(url):
         return data[index]
 
     return {'url':url,'LastInner':0}
-    pass
 
+# checking changes
 @multitasking.task
-def checkChanges(site):
-    url = site['url']
-    props = site['element']
+def checkChanges(page):
+    url = page['url']
+    props = page['element']
 
     # getting the site
-    response = getsite(url)
+    response = getPage(url)
     tries = 0
     def tryGet():
         if(response.text == ""):
@@ -105,7 +102,7 @@ def checkChanges(site):
             tries += 1
             if(tries<numberOfTries):
                 return tryGet()
-            raise NameError("it alaways returns '' from site "+url)
+            raise NameError("it alaways returns '' from page "+url)
     
 
     # grab all text
@@ -118,26 +115,23 @@ def checkChanges(site):
 
     if(str(text1) != str(text2)):
         updateOnMonitoringData(url, text1)
-        eventHandler(DataStructor(url, text2, text1, datetime.now()))
+        changeEvent(DataStructor(url, text2, text1, datetime.now()))
 
     time.sleep(timeOfWaitingForTheNextScan)
 
     checkChanges(site)
 
 
-    pass
 
-def eventHandler(data):
-    print(data.url+" had changed")
-    pass
-
-
-def checkHandler():
+# giving taskes
+def taskesHandler():
     sites = readMap()
     for site in sites:
         checkChanges(site)
 
+taskesHandler()
 
-    
-
-checkHandler()
+# this function execute when changes has happen with dataStructor(url,olddata,newData,time)
+# you can make it do whatever you want 
+def changeEvent(dataStructor):
+    print(dataStructor.url+" had changed")
