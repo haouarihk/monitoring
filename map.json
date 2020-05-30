@@ -1,10 +1,10 @@
 [
     {
         "url": "https://evergreen-olivine-sardine.glitch.me",
-        "props":"#damm"
+        "element":"#damm"
     },
     {
         "url": "https://time.is/", 
-        "props":"#clock"
+        "element":"#clock"
     }
 ]

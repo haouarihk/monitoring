@@ -94,7 +94,7 @@ def getDataChanged(url):
 @multitasking.task
 def checkChanges(site):
     url = site['url']
-    props = site['props']
+    props = site['element']
 
     # getting the site
     response = getsite(url)
